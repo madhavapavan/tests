@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Mono:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Disable the default cursor */
+body {
+  cursor: none;
+}
+
+/* Disable the pointer cursor on buttons and anchor tags */
+button, a {
+  cursor: none !important;
+}
+:root {
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #111111;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* App.css or Navbar.css */
+@keyframes slowspin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hover\:animate-slowspin:hover {
+  animation: slowspin 3s linear infinite;
+}
+.cursor-dot {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(100, 108, 255, 0.8);
+  z-index: 9999;
+  mix-blend-mode: screen;
+  filter: blur(1px);
+}
+
+.cursor-outline {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(100, 108, 255, 0.3);
+  z-index: 9998;
+  mix-blend-mode: difference;
+}
+
+.matrix-text {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 500;
+}
+
+.gradient-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(45deg, #646cff, #535bf2, #8a2be2);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  filter: blur(100px);
+  opacity: 0.5;
+  mix-blend-mode: screen;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.scroll-indicator {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+.skill-card {
+  perspective: 1000px;
+}
+
+.skill-card-inner {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.skill-card:hover .skill-card-inner {
+  transform: rotateY(180deg);
+}
+
+.skill-card-front, .skill-card-back {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.skill-card-back {
+  transform: rotateY(180deg);
+}
+/* Base styles for timeline item */
+.timeline-item {
+  position: relative;
+}
+
+/* Default styles for mobile (all items aligned left) */
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0; /* Dot on the left edge for mobile */
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #646cff;
+  z-index: 1;
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* Added transform to transition */
+}
+
+.timeline-item:hover::before {
+  box-shadow: 0 0 14px 6px rgba(100, 108, 255, 1); /* Brighter glow: larger spread, full opacity */
+  transform: scale(1.2); /* Slightly increases radius (20% larger) */
+}
+
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 5.5px; /* Line centered with 12px dot for mobile */
+  width: 1px;
+  height: 120%; /* Keeping your 120% height */
+  background-color: rgba(100, 108, 255, 0.3);
+}
+
+/* Medium screens and up - Left items (even index) */
+@media (min-width: 768px) {
+  .timeline-item.md\:ml-auto::before {
+    right: -6px; /* Dot positioned right from card per your spec */
+    left: auto;
+  }
+
+  .timeline-item.md\:ml-auto::after {
+    right: 0px; /* Line positioned right per your spec */
+    left: auto;
+  }
+
+  .timeline-item.md\:ml-auto .type-badge {
+    position: absolute;
+    left: -50px; /* Moves type badge outside the card on the left */
+  }
+}
+
+/* Medium screens and up - Right items (odd index) */
+@media (min-width: 768px) {
+  .timeline-item.md\:mr-auto::before {
+    left: -6px; /* Dot positioned left from card per your spec */
+  }
+
+  .timeline-item.md\:mr-auto::after {
+    left: 0px; /* Line positioned left per your spec */
+  }
+}
+
+.waves {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 250px;
+  background: url('/waves.svg');
+  background-size: 2000px 300px;
+  animation: wave 10s linear infinite;
+  z-index: -1;
+  transition: opacity 0.3s ease; /* Smooth opacity transition */
+  opacity: 0.7; /* Base translucency - adjust as needed */
+}
+
+.waves:nth-child(2) {
+  animation-delay: -5s;
+  animation-duration: 7s;
+  opacity: 0.5; /* Slightly more translucent than base */
+}
+
+.waves:nth-child(3) {
+  animation-delay: -2s;
+  animation-duration: 15s;
+  opacity: 0.3; /* Even more translucent */
+}
+
+@keyframes wave {
+  0% {
+    background-position-x: 0;
+  }
+  100% {
+    background-position-x: 2000px;
+  }
+}
